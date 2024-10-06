@@ -1,12 +1,17 @@
-import React from 'react'
+import React from "react";
+import "./FormInput.css"
 
-const FormTextInput = () => {
+const FormTextInput = ({ onChange, value, name, placeholder }) => {
   return (
-    <input 
-    type='text'
-    
+    <input
+    className="customFormInput"
+      type="text"
+      onChange={onChange}
+      value={value}
+      name={name}
+      placeholder={placeholder}
     />
-  )
-}
+  );
+};
 
-export default FormTextInput
+export default FormTextInput;

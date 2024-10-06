@@ -1,0 +1,8 @@
+.customCheckbox {
+    display: flex;
+    align-items: center;
+  }
+  
+  .customCheckbox input {
+    margin-right: 10px;
+  }

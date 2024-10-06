@@ -1,3 +1,4 @@
+import { SweetAlertToast } from "@/utils/sweetAlert";
 import { AXIOS_CLIENT } from "./AXIOS_CLEINT";
 
 export const makeRequest = async (payload, endpoint, method = "post") => {
@@ -7,6 +8,11 @@ export const makeRequest = async (payload, endpoint, method = "post") => {
       return response;
     }
   } catch (error) {
+    const message = error.response.data.message || "error calling api"
+    SweetAlertToast.fire({
+      icon: "error",
+      title: message
+    });
     console.log(error, "error");
   }
 };

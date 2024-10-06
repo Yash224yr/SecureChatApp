@@ -1,5 +1,7 @@
 export const ROUTESPATH = { 
-    home : "/"
+    home : "/" , 
+    login : "/authentication/login" ,
+    register : "/authentication/register"
 }
 
 
