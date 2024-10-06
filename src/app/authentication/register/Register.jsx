@@ -3,39 +3,54 @@
 import React, { useState } from "react";
 import "./Register.css";
 import { REGISTER_API } from "@/api";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css";
-import { IMAGES_PATH } from "@/constant/IMAGES_PATH";
-import Image from "next/image";
-import RightSection from "../components/rightSection/RightSection";
-import FormTextInput from "@/components/CustomFormInput/FormTextInput";
-import { ROUTESPATH } from "@/constant/ROUTES";
-import { useRouter } from 'nextjs-toploader/app';
+import { useRouter } from "nextjs-toploader/app";
 import FormCheckBox from "@/components/CustomCheckBox/FormCheckBox";
+import { Form, Formik } from "formik";
+import CustomButton from "@/components/CustomButton/CustomButton";
+import * as Yup from "yup";
+import FormikTextInput from "@/components/CustomFormInput/FormikTextInput";
+import RightSection from "../components/rightSection/RightSection";
+import { ROUTESPATH } from "@/constant/ROUTES";
+import { SweetAlertToast } from "@/utils/sweetAlert";
 
+const validationSchema = Yup.object({
+  username: Yup.string()
+    .min(3, "Username must be at least 3 characters long")
+    .required("Username is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters long")
+    .required("Password is required"),
+  terms: Yup.bool().oneOf([true], "You must accept the terms and conditions"),
+});
 
 const Register = () => {
-  const [loader, setLoader] = useState(false);
+  const router = useRouter();
 
-  const router = useRouter()
-
-  const handleRegisterUser = async (e) => {
-    e.preventDefault();
+  const handleRegisterUser = async (values, { setSubmitting }) => {
+    console.log(values, "valuesss");
     try {
-      setLoader(true);
-      const response = await REGISTER_API();
-      // Handle the response as needed
+      const response = await REGISTER_API(values);
+      console.log(response, "response");
+      if (response && response.status) {
+        SweetAlertToast.fire({
+          icon: "success",
+          title: response?.message,
+        });
+        router.push(ROUTESPATH.login);
+      }
     } catch (error) {
       console.log(error);
     } finally {
-      setLoader(false);
+      setSubmitting(false); // Stop the form from showing the submitting state
     }
   };
 
-  const routeToLogin = ()=>{
-    router.push(ROUTESPATH.login)
-  }
+  const routeToLogin = () => {
+    router.push(ROUTESPATH.login);
+  };
 
   return (
     <div className="register-container">
@@ -44,23 +59,39 @@ const Register = () => {
         <p>Discover a better way of spending with Fianceo.</p>
         <button className="google-signin">Sign with Google</button>
         <div className="divider">Or</div>
-        <form onSubmit={handleRegisterUser}>
-          <FormTextInput name={"username"} placeholder="Type your name" />
-          <FormTextInput name={"email"} placeholder="Enter your e-mail" />
-          <FormTextInput name={"password"} placeholder="Password" />
-          <FormCheckBox />
-          <button type="submit" className="submit-btn">
-            Sign up
-          </button>
-        </form>
-        <p className="login-link">
-          Not a member yet? <a href="/login">Create an account</a>
-        </p>
+
+        <Formik
+          initialValues={{
+            username: "",
+            email: "",
+            password: "",
+            terms: false,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleRegisterUser}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <FormikTextInput
+                name="username"
+                placeholder="Type your username"
+              />
+              <FormikTextInput name="email" placeholder="Enter your e-mail" />
+              <FormikTextInput
+                name="password"
+                placeholder="Password"
+                type="password"
+              />
+              <FormCheckBox name="terms" label="Accept Terms and Conditions" />
+              <CustomButton isSubmitting={isSubmitting}>Sign Up</CustomButton>
+            </Form>
+          )}
+        </Formik>
       </div>
 
       <RightSection
         title={"Secure Chat"}
-        text={"Already have and account"}
+        text={"Already have an account?"}
         btnText="Login"
         onClick={routeToLogin}
       />

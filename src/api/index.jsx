@@ -5,7 +5,7 @@ export const makeRequest = async (payload, endpoint, method = "post") => {
   try {
     const response = await AXIOS_CLIENT[method](endpoint, payload);
     if (response) {
-      return response;
+      return response?.data;
     }
   } catch (error) {
     const message = error.response.data.message || "error calling api"

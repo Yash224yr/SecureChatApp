@@ -1,11 +1,15 @@
 import React from "react";
-import "./FormCheckBox.css"
+import { Field, ErrorMessage } from "formik";
+import "./FormCheckBox.css";
 
-const FormCheckBox = () => {
+const FormCheckBox = ({ name, label }) => {
   return (
-    <div className="customCheckbox" id="">
-      <input type="checkbox" id="terms" />
-      <label htmlFor="terms">I agree with Terms and Privacy</label>
+    <div className="customCheckbox">
+      {/* Using Field to bind with Formik */}
+      <Field type="checkbox" id={name} name={name} />
+      <label htmlFor={name}>{label}</label>
+      {/* Error message for validation */}
+      <ErrorMessage name={name} component="div" className="error" />
     </div>
   );
 };
