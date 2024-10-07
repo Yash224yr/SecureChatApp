@@ -12,6 +12,8 @@ import { ROUTESPATH } from "@/constant/ROUTES";
 import { SweetAlertToast } from "@/utils/sweetAlert";
 import FormSection from "../components/FormSection/FormSection";
 import { LOGIN_API } from "@/api";
+import { useCookies } from "react-cookie";
+import { SECURE_CHAT_COOKIE } from "@/constant/ENV";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -24,6 +26,7 @@ const validationSchema = Yup.object({
 
 const Login = () => {
   const router = useRouter();
+  const [cookies , setCookie] = useCookies([SECURE_CHAT_COOKIE]);
 
   const handleLoginUser = async (values, { setSubmitting, setErrors }) => {
     try {
@@ -34,7 +37,8 @@ const Login = () => {
           icon: "success",
           title: response?.message,
         });
-        router.push(ROUTESPATH.dashboard); // Redirect to the dashboard or another route on successful login
+        setCookie(SECURE_CHAT_COOKIE , response?.token)
+        router.push(ROUTESPATH.home); // Redirect to the dashboard or another route on successful login
       } else {
         setErrors({ common: response?.message });
       }

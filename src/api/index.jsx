@@ -20,3 +20,8 @@ export const makeRequest = async (payload, endpoint, method = "post") => {
 export const REGISTER_API = (payload) => {
   return makeRequest(payload , "authentication/register");
 };
+
+export const LOGIN_API = (payload) => {
+  return makeRequest(payload , "authentication/login");
+};
+

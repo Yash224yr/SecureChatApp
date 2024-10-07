@@ -15,7 +15,6 @@ const ProtectedPage = ({ children }) => {
   const [loader, setLoader] = useState(true);
   useEffect(() => {
     const cookieToken = cookies[SECURE_CHAT_COOKIE];
-
     if (cookieToken) {
       if (location === ROUTESPATH.login || location === ROUTESPATH.register) {
         router.push(ROUTESPATH.home);
@@ -23,8 +22,10 @@ const ProtectedPage = ({ children }) => {
     } else if (AUTH_ROUTES.includes(location)) {
       router.push(ROUTESPATH.login);
     }
-    setIsReady(true);
-    setLoader(false);
+    setTimeout(()=>{
+      setIsReady(true);
+      setLoader(false);
+    },300)
   }, [cookies, location, router]);
 
   if (loader || !isReady) {
