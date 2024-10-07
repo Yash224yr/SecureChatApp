@@ -1,0 +1,39 @@
+
+.form-section {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+  }
+  
+  .form-section h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .form-section p {
+    color: #777;
+    margin-bottom: 20px;
+  }
+  
+  .google-signin {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  
+  .divider {
+    text-align: center;
+    color: #999;
+    margin: 20px 0;
+  }
+  
+ 
+  

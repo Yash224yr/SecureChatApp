@@ -1,10 +1,14 @@
 import React from "react";
 import "./CustomButton.css";
 
-const CustomButton = ({ isSubmitting, children }) => {
+const CustomButton = ({ loader, text }) => {
   return (
-    <button type="submit" className="submit-btn" disabled={isSubmitting}>
-      {isSubmitting ? "Submitting..." : children}
+    <button
+      type="submit"
+      className={`submit-btn ${loader ? "loading" : ""}`}
+      disabled={loader}
+    >
+      {!loader ? text : <span className="loader"></span>}
     </button>
   );
 };

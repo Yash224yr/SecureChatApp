@@ -12,6 +12,7 @@ import FormikTextInput from "@/components/CustomFormInput/FormikTextInput";
 import RightSection from "../components/rightSection/RightSection";
 import { ROUTESPATH } from "@/constant/ROUTES";
 import { SweetAlertToast } from "@/utils/sweetAlert";
+import FormSection from "../components/FormSection/FormSection";
 
 const validationSchema = Yup.object({
   username: Yup.string()
@@ -30,8 +31,8 @@ const Register = () => {
   const router = useRouter();
 
   const handleRegisterUser = async (values, { setSubmitting }) => {
-    console.log(values, "valuesss");
     try {
+      setSubmitting(true);
       const response = await REGISTER_API(values);
       console.log(response, "response");
       if (response && response.status) {
@@ -44,7 +45,7 @@ const Register = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setSubmitting(false); // Stop the form from showing the submitting state
+      setSubmitting(false);
     }
   };
 
@@ -54,12 +55,10 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <div className="form-section">
-        <h1>Sign up</h1>
-        <p>Discover a better way of spending with Fianceo.</p>
-        <button className="google-signin">Sign with Google</button>
-        <div className="divider">Or</div>
-
+      <FormSection
+        title={"Sign up"}
+      
+      >
         <Formik
           initialValues={{
             username: "",
@@ -83,11 +82,11 @@ const Register = () => {
                 type="password"
               />
               <FormCheckBox name="terms" label="Accept Terms and Conditions" />
-              <CustomButton isSubmitting={isSubmitting}>Sign Up</CustomButton>
+              <CustomButton loader={isSubmitting} text="Sign Up" />
             </Form>
           )}
         </Formik>
-      </div>
+      </FormSection>
 
       <RightSection
         title={"Secure Chat"}

@@ -1,0 +1,1 @@
+export const SECURE_CHAT_COOKIE = process.env.NEXT_PUBLIC_SECURE_CHAT_COOKIE
