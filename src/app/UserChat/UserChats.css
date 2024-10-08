@@ -1,0 +1,221 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #eaeaea;
+  /* Light background color */
+}
+
+.user-chats {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: linear-gradient(135deg, #5f2c82, #49a09d);
+  /* Gradient background for sidebar */
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.friend-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.friend-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.friend-list li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Highlight on hover */
+}
+
+.friend-list li.active {
+  background-color: rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+}
+
+.chat-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  /* White background for chat section */
+  padding: 20px;
+  position: relative;
+}
+
+.chat-header {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Center-align items in header */
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.private-chat-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  /* Primary color for button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.private-chat-button:hover {
+  background-color: #0056b3;
+  /* Darker shade on hover */
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+  /* Light gray background for messages */
+  position: relative;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 15px;
+  /* Rounded corners */
+  max-width: 60%;
+  position: relative;
+  animation: fadeIn 0.5s;
+}
+
+.sent {
+  background-color: #4caf50;
+  /* Green for sent messages */
+  color: white;
+  align-self: flex-start;
+  /* Align to left */
+  margin-left: auto;
+  /* Keep sent messages on right */
+}
+
+.received {
+  background-color: #f44336;
+  /* Red for received messages */
+  color: white;
+  align-self: flex-end;
+  /* Align to right */
+  margin-right: auto;
+  /* Keep received messages on left */
+}
+
+.message-text {
+  margin-bottom: 5px;
+  /* Space between text and time */
+}
+
+.message-time {
+  font-size: 12px;
+  /* Smaller font for time */
+  opacity: 0.8;
+  /* Slightly faded */
+}
+
+.message-input {
+  display: flex;
+}
+
+.input-field {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  border-color: #4caf50;
+  /* Focus border color */
+}
+
+.send-button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  /* Primary color for button */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.send-button:hover {
+  background-color: #0056b3;
+  /* Darker shade on hover */
+  transform: translateY(-2px);
+}
+
+.feature-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.feature-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.feature-btn:hover,
+.feature-btn.active {
+  transform: scale(1.1);
+  color: #007bff;
+  /* Color change on hover */
+}
+
+
+
+.blurred {
+  filter: blur(3px);
+  opacity: 0.5;
+  /* Optional: Reduce opacity for better effect */
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
