@@ -13,6 +13,7 @@ import RightSection from "../components/rightSection/RightSection";
 import { ROUTESPATH } from "@/constant/ROUTES";
 import { SweetAlertToast } from "@/utils/sweetAlert";
 import FormSection from "../components/FormSection/FormSection";
+import AuthenticationContainer from "../components/authenticationContainer/AuthenticationContainer";
 
 const validationSchema = Yup.object({
   username: Yup.string()
@@ -54,47 +55,50 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
-      <FormSection
-        title={"Sign up"}
-      
-      >
-        <Formik
-          initialValues={{
-            username: "",
-            email: "",
-            password: "",
-            terms: false,
-          }}
-          validationSchema={validationSchema}
-          onSubmit={handleRegisterUser}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <FormikTextInput
-                name="username"
-                placeholder="Type your username"
-              />
-              <FormikTextInput name="email" placeholder="Enter your e-mail" />
-              <FormikTextInput
-                name="password"
-                placeholder="Password"
-                type="password"
-              />
-              <FormCheckBox name="terms" label="Accept Terms and Conditions" />
-              <CustomButton loader={isSubmitting} text="Sign Up" />
-            </Form>
-          )}
-        </Formik>
-      </FormSection>
+    <AuthenticationContainer>
+      <div className="register-container">
+        <FormSection
+          title={"Sign up"}
 
-      <RightSection
-        title={"Secure Chat"}
-        text={"Already have an account?"}
-        btnText="Login"
-        onClick={routeToLogin}
-      />
-    </div>
+        >
+          <Formik
+            initialValues={{
+              username: "",
+              email: "",
+              password: "",
+              terms: false,
+            }}
+            validationSchema={validationSchema}
+            onSubmit={handleRegisterUser}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <FormikTextInput
+                  name="username"
+                  placeholder="Type your username"
+                />
+                <FormikTextInput name="email" placeholder="Enter your e-mail" />
+                <FormikTextInput
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                />
+                <FormCheckBox name="terms" label="Accept Terms and Conditions" />
+                <CustomButton loader={isSubmitting} text="Sign Up" />
+              </Form>
+            )}
+          </Formik>
+        </FormSection>
+
+        <RightSection
+          title={"Secure Chat"}
+          text={"Already have an account?"}
+          btnText="Login"
+          onClick={routeToLogin}
+        />
+      </div>
+    </AuthenticationContainer>
+
   );
 };
 

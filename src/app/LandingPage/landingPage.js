@@ -3,21 +3,36 @@
 import React from 'react';
 import './landingPage.css';
 import { useRouter } from "nextjs-toploader/app";
+import Link from 'next/link';
+import { IoMdLogOut } from "react-icons/io";
+import { useCookies } from 'react-cookie';
+import { SECURE_CHAT_COOKIE } from '@/constant/ENV';
+import { ROUTESPATH } from '@/constant/ROUTES';
 
 const LandingPage = () => {
   const router = useRouter()
+  const [cookies, setCookie, removeCookie] = useCookies([SECURE_CHAT_COOKIE]);
 
-  
+  const handleLogOut = () => {
+    removeCookie(SECURE_CHAT_COOKIE)
+    router.push(ROUTESPATH.login)
+  }
+
   return (
     <div className="landing-page">
       <header className="header">
         <h1 className="logo">ChatApp</h1>
         <nav className="nav">
           <ul>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#download" className="cta-button">Download</a></li>
+            <li><Link href="#features">Features</Link></li>
+            <li><Link href="#about">About</Link></li>
+            <li><Link href="#contact">Contact</Link></li>
+            <li>
+              <Link href="#logout" className="logout-button" onClick={handleLogOut}>
+                <IoMdLogOut style={{ marginRight: '8px' }} />
+                Logout
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
@@ -29,7 +44,7 @@ const LandingPage = () => {
             <div className="hero-text">
               <h2>Chat Anytime, Anywhere</h2>
               <p>Stay connected with friends and family effortlessly.</p>
-              <button className="cta-button" onClick={()=> router.push("/UserChat")} >Get Started</button>
+              <button className="cta-button" onClick={() => router.push("/UserChat")} >Get Started</button>
             </div>
             <div className="hero-image">
               <img src="https://via.placeholder.com/600x400.png?text=Chat+App" alt="Chat App" />

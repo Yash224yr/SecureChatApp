@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import ProtectedPage from "./protectedPage";
 import NextTopLoader from "nextjs-toploader";
+import { SocketProvider } from "./SocketContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,7 +41,9 @@ export default function RootLayout({ children }) {
           zIndex={1600}
           showAtBottom={false}
         />
-        <ProtectedPage>{children}</ProtectedPage>
+        <SocketProvider> {/* Correct usage */}
+          <ProtectedPage>{children}</ProtectedPage>
+        </SocketProvider>
       </body>
     </html>
   );

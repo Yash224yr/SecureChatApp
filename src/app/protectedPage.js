@@ -1,12 +1,13 @@
 "use client";
 
 import { SECURE_CHAT_COOKIE } from "@/constant/ENV";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useRouter } from "nextjs-toploader/app";
 import { AUTH_ROUTES, ROUTESPATH } from "@/constant/ROUTES";
 import { usePathname } from "next/navigation";
-import { socket } from "@/utils/SocketIO/socketIo";
+import ShowOnlineStatus from "@/components/showOnlineStatus";
+import { SocketContext } from "./SocketContext";
 
 const ProtectedPage = ({ children }) => {
   const [cookies] = useCookies([SECURE_CHAT_COOKIE]);
@@ -14,67 +15,46 @@ const ProtectedPage = ({ children }) => {
   const location = usePathname();
   const [isReady, setIsReady] = useState(false);
   const [loader, setLoader] = useState(true);
-  const [isConnected, setIsConnected] = useState(false);
-  const [transport, setTransport] = useState("N/A");
+
+  const {isConnected } = useContext(SocketContext)
+
+
+
 
 
   useEffect(() => {
-    const cookieToken = cookies[SECURE_CHAT_COOKIE];
-    if (cookieToken) {
-      if (location === ROUTESPATH.login || location === ROUTESPATH.register) {
-        router.push(ROUTESPATH.home);
+    const checkForSession = async () => {
+      const cookieToken = cookies[SECURE_CHAT_COOKIE];
+      console.log(cookieToken ,  location.startsWith("/authentication"))
+      if (cookieToken && location.startsWith("/authentication")) {
+        return router.push(ROUTESPATH.home);
       }
-    } else if (AUTH_ROUTES.includes(location)) {
-      router.push(ROUTESPATH.login);
+      else if (!cookieToken && AUTH_ROUTES.includes(location)) {
+        return router.push(ROUTESPATH.login);
+      }
+      setTimeout(() => {
+        setIsReady(true);
+        setLoader(false);
+      }, 300);
     }
-    setTimeout(() => {
-      setIsReady(true);
-      setLoader(false);
-    }, 300);
+
+    checkForSession()
+
   }, [cookies, location, router]);
 
 
 
-  useEffect(() => {
-    if (socket.connected) {
-      onConnect();
-    }
 
-    function onConnect() {
-      console.log("Connected...............")
-      setIsConnected(true);
-      setTransport(socket.io.engine.transport.name);
-
-      socket.io.engine.on("upgrade", (transport) => {
-        setTransport(transport.name);
-      });
-    }
-
-    function onDisconnect() {
-      setIsConnected(false);
-      setTransport("N/A");
-    }
-
-    socket.on("connect", onConnect);
-    // socket.on("disconnect", onDisconnect);
-
-    return () => {
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-    };
-  }, []);
 
   if (loader || !isReady) {
     return <p>Loadingg .....</p>;
   }
   // Render children if no redirect is required
-  return  (
-    <div>
-    <p>Status: {isConnected ? "connected" : "disconnected"}</p>
-    <p>Transport: {transport}</p>
+  return (
+    <>
+    <ShowOnlineStatus isConnected={isConnected} />
     {isReady && children || null}
-  </div>
-    
+    </>
   )
 };
 

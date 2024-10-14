@@ -1,15 +1,3 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #eaeaea;
-  /* Light background color */
-}
-
 .user-chats {
   display: flex;
   height: 100vh;
@@ -18,7 +6,6 @@ body {
 .sidebar {
   width: 250px;
   background: linear-gradient(135deg, #5f2c82, #49a09d);
-  /* Gradient background for sidebar */
   color: white;
   padding: 20px;
 }
@@ -26,11 +13,17 @@ body {
 .sidebar h2 {
   margin-bottom: 15px;
   font-size: 24px;
+  color: #20c997; /* Example: Teal */
+  font-weight: bold;
 }
+ 
 
 .friend-list {
   list-style-type: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .friend-list li {
@@ -42,7 +35,6 @@ body {
 
 .friend-list li:hover {
   background-color: rgba(255, 255, 255, 0.2);
-  /* Highlight on hover */
 }
 
 .friend-list li.active {
@@ -55,7 +47,6 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  /* White background for chat section */
   padding: 20px;
   position: relative;
 }
@@ -67,28 +58,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Center-align items in header */
 }
 
 .chat-header h2 {
   margin: 0;
   font-size: 24px;
-}
-
-.private-chat-button {
-  padding: 5px 10px;
-  background-color: #007bff;
-  /* Primary color for button */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.private-chat-button:hover {
-  background-color: #0056b3;
-  /* Darker shade on hover */
 }
 
 .messages {
@@ -99,15 +73,12 @@ body {
   border-radius: 5px;
   margin-bottom: 20px;
   background-color: #f8f9fa;
-  /* Light gray background for messages */
-  position: relative;
 }
 
 .message {
   margin: 10px 0;
   padding: 10px;
   border-radius: 15px;
-  /* Rounded corners */
   max-width: 60%;
   position: relative;
   animation: fadeIn 0.5s;
@@ -115,34 +86,25 @@ body {
 
 .sent {
   background-color: #4caf50;
-  /* Green for sent messages */
   color: white;
   align-self: flex-start;
-  /* Align to left */
   margin-left: auto;
-  /* Keep sent messages on right */
 }
 
 .received {
   background-color: #f44336;
-  /* Red for received messages */
   color: white;
   align-self: flex-end;
-  /* Align to right */
   margin-right: auto;
-  /* Keep received messages on left */
 }
 
 .message-text {
   margin-bottom: 5px;
-  /* Space between text and time */
 }
 
 .message-time {
   font-size: 12px;
-  /* Smaller font for time */
   opacity: 0.8;
-  /* Slightly faded */
 }
 
 .message-input {
@@ -160,14 +122,12 @@ body {
 
 .input-field:focus {
   border-color: #4caf50;
-  /* Focus border color */
 }
 
 .send-button {
   padding: 10px 15px;
   border: none;
   background-color: #007bff;
-  /* Primary color for button */
   color: white;
   border-radius: 5px;
   cursor: pointer;
@@ -176,7 +136,6 @@ body {
 
 .send-button:hover {
   background-color: #0056b3;
-  /* Darker shade on hover */
   transform: translateY(-2px);
 }
 
@@ -198,24 +157,32 @@ body {
 .feature-btn.active {
   transform: scale(1.1);
   color: #007bff;
-  /* Color change on hover */
 }
-
-
 
 .blurred {
   filter: blur(3px);
-  opacity: 0.5;
-  /* Optional: Reduce opacity for better effect */
+  opacity: 0.7;
+  background-color: #e0e0e0;
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
+.go-back-btn {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
 
-  to {
-    opacity: 1;
-  }
+.go-back-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.icon {
+  margin-right: 5px;
 }

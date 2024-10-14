@@ -14,6 +14,7 @@ import FormSection from "../components/FormSection/FormSection";
 import { LOGIN_API } from "@/api";
 import { useCookies } from "react-cookie";
 import { SECURE_CHAT_COOKIE } from "@/constant/ENV";
+import AuthenticationContainer from "../components/authenticationContainer/AuthenticationContainer";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -26,7 +27,7 @@ const validationSchema = Yup.object({
 
 const Login = () => {
   const router = useRouter();
-  const [cookies , setCookie] = useCookies([SECURE_CHAT_COOKIE]);
+  const [cookies, setCookie] = useCookies([SECURE_CHAT_COOKIE]);
 
   const handleLoginUser = async (values, { setSubmitting, setErrors }) => {
     try {
@@ -37,7 +38,13 @@ const Login = () => {
           icon: "success",
           title: response?.message,
         });
-        setCookie(SECURE_CHAT_COOKIE , response?.token)
+        setCookie(SECURE_CHAT_COOKIE, response?.token, {
+          path: '/',
+          secure: true,
+          sameSite: 'Lax',
+          maxAge: 3600000, // Optional: Set the max age in seconds (1 hour in this example)
+        });
+
         router.push(ROUTESPATH.home); // Redirect to the dashboard or another route on successful login
       } else {
         setErrors({ common: response?.message });
@@ -55,42 +62,49 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <FormSection title={"Log in"}>
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          validationSchema={validationSchema}
-          onSubmit={handleLoginUser}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <ErrorMessage
-                name="common"
-                component="div"
-                className="error-message"
-              />
-              <FormikTextInput name="email" placeholder="Enter your e-mail" />
-              <FormikTextInput
-                name="password"
-                placeholder="Password"
-                type="password"
-              />
-              <CustomButton isSubmitting={isSubmitting} text="Log In" />
-            </Form>
-          )}
-        </Formik>
-      </FormSection>
+    <AuthenticationContainer>
 
-      <RightSection
-        title={"Secure Chat"}
-        text={"Don't have an account?"}
-        btnText="Sign Up"
-        onClick={routeToRegister}
-      />
-    </div>
+
+
+      <div className="login-container">
+        <FormSection title={"Log in"}>
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validationSchema={validationSchema}
+            onSubmit={handleLoginUser}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <ErrorMessage
+                  name="common"
+                  component="div"
+                  className="error-message"
+                />
+                <FormikTextInput name="email" placeholder="Enter your e-mail" />
+                <FormikTextInput
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                />
+                <CustomButton isSubmitting={isSubmitting} text="Log In" />
+              </Form>
+            )}
+          </Formik>
+        </FormSection>
+
+        <RightSection
+          title={"Secure Chat"}
+          text={"Don't have an account?"}
+          btnText="Sign Up"
+          onClick={routeToRegister}
+        />
+      </div>
+
+    </AuthenticationContainer>
+
   );
 };
 

@@ -1,0 +1,36 @@
+/* Flex container to align dot and text */
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* Space between dot and text */
+  position: fixed;
+  z-index: 999999;
+  right: 20px;
+  bottom: 20px;
+  opacity: 0.6;
+}
+
+/* Style for the dot */
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Online and offline styles */
+.online {
+  background-color: #28a745;
+  /* Bright green */
+}
+
+.offline {
+  background-color: rgba(40, 167, 69, 0.3);
+  /* Semi-transparent green */
+}
+
+/* Style for the text next to the dot */
+.status-text {
+  font-size: 14px;
+  color: #333;
+}
