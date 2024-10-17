@@ -65,6 +65,90 @@
   font-size: 24px;
 }
 
+.friend-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  padding: 8px 0;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #fff;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.friend-item.active {
+  background-color: #f0f4ff; /* Highlight active friend */
+}
+
+.friend-item:hover {
+  background-color: #eef5ff; /* Light hover effect */
+}
+
+.friend-email {
+  color: white;
+}
+
+.new-message {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #ff9800; /* Orange color for the new message text */
+}
+
+.message-icon {
+  font-size: 16px;
+  color: #ff9800; /* Same color as the text */
+}
+
+.message-text {
+  font-size: 12px;
+}
+
+/* Optional: Add some padding between items */
+li + li {
+  margin-top: 5px;
+}
+
+
+.status-dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.online {
+  background-color: #4caf50; /* Green dot for online */
+}
+
+.offline {
+  background-color: #f44336; /* Red dot for offline */
+}
+
+.friend-name {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Optional hover effect */
+.friend-status:hover .friend-name {
+  color: #007bff; /* Change text color on hover */
+}
+
+
 .messages {
   flex: 1;
   overflow-y: auto;

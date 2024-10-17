@@ -9,10 +9,10 @@ export const useSocket = () => useContext(SocketContext);
 export const SocketProvider = ({ children }) => {
   const socket = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
-
+  const [profileData , setProfileData] = useState(null)
   useEffect(() => {
     // Initialize socket connection
-    socket.current = io("https://52fb-223-185-12-87.ngrok-free.app", {
+    socket.current = io("http://localhost:3000", {
       transports: ["websocket", "polling"], // Use WebSocket with fallback to polling
     });
 
@@ -37,7 +37,7 @@ export const SocketProvider = ({ children }) => {
   }, []);
 
   return (
-    <SocketContext.Provider value={{ socket: socket.current, isConnected }}>
+    <SocketContext.Provider value={{ socket: socket.current, isConnected  , profileData , setProfileData}}>
       {children}
     </SocketContext.Provider>
   );

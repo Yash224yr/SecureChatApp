@@ -8,6 +8,7 @@ import { AUTH_ROUTES, ROUTESPATH } from "@/constant/ROUTES";
 import { usePathname } from "next/navigation";
 import ShowOnlineStatus from "@/components/showOnlineStatus";
 import { SocketContext } from "./SocketContext";
+import jwt from 'jsonwebtoken';
 
 const ProtectedPage = ({ children }) => {
   const [cookies] = useCookies([SECURE_CHAT_COOKIE]);
@@ -15,17 +16,16 @@ const ProtectedPage = ({ children }) => {
   const location = usePathname();
   const [isReady, setIsReady] = useState(false);
   const [loader, setLoader] = useState(true);
-
-  const {isConnected } = useContext(SocketContext)
-
-
-
-
+  const { setProfileData , profileData } = useContext(SocketContext)
+  const { isConnected } = useContext(SocketContext)
 
   useEffect(() => {
     const checkForSession = async () => {
       const cookieToken = cookies[SECURE_CHAT_COOKIE];
-      console.log(cookieToken ,  location.startsWith("/authentication"))
+      console.log(cookieToken, location.startsWith("/authentication"))
+      if(cookieToken && profileData === null){
+        setProfileData(jwt.decode(cookieToken))
+      }
       if (cookieToken && location.startsWith("/authentication")) {
         return router.push(ROUTESPATH.home);
       }
@@ -37,14 +37,8 @@ const ProtectedPage = ({ children }) => {
         setLoader(false);
       }, 300);
     }
-
     checkForSession()
-
   }, [cookies, location, router]);
-
-
-
-
 
   if (loader || !isReady) {
     return <p>Loadingg .....</p>;
@@ -52,8 +46,8 @@ const ProtectedPage = ({ children }) => {
   // Render children if no redirect is required
   return (
     <>
-    <ShowOnlineStatus isConnected={isConnected} />
-    {isReady && children || null}
+      <ShowOnlineStatus isConnected={isConnected} />
+      {isReady && children || null}
     </>
   )
 };
