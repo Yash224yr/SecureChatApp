@@ -3,7 +3,13 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { FaPaperclip, FaLock, FaLockOpen, FaUser } from "react-icons/fa";
 import { io } from "socket.io-client";
 
-const ChatBox = ({ selectedFriend }) => {
+const ChatBox = ({
+  selectedFriend,
+  profileData,
+  connectedUser,
+  setNewMessageNotification,
+  newMessageNotification,
+}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isPrivateChat, setIsPrivateChat] = useState(false);
@@ -12,29 +18,41 @@ const ChatBox = ({ selectedFriend }) => {
   const { isConnected, socket } = useContext(SocketContext);
 
   useEffect(() => {
-    socket.on("messageSentSuccess", (data) => {
+    socket?.on("messageSentSuccess", (data) => {
       setMessages((prevMessages) => [...prevMessages, data]);
     });
 
     return () => {
-      socket.off("messageSentSuccess");
+      socket?.off("messageSentSuccess");
     };
   }, [socket]);
 
-  const handleNewMessage = (data) => {
-    const { senderId, recipientId } = data;
-    const { myId, partnerId } = selectedFriend;
+  useEffect(() => {
+    const removeNewMessageNotification = newMessageNotification.filter(
+      (item) => {
+        return item !== selectedFriend.id;
+      }
+    );
+    setNewMessageNotification(removeNewMessageNotification);
+  }, [selectedFriend]);
 
-    if (recipientId === myId) {
+  const handleNewMessage = (data) => {
+    console.log(data, "idid");
+    const { senderId, recipientId } = data;
+    const { id } = selectedFriend;
+    selectedFriend.id !== data?.senderId &&
+      setNewMessageNotification([...newMessageNotification, data?.senderId]);
+    if (senderId === id) {
       setMessages((prevMessages) => [...prevMessages, data]);
     }
   };
 
   useEffect(() => {
+    if (!selectedFriend?.id) return;
     const fetchPreviousChats = () => {
       socket?.emit("fetchOldMessages", {
-        recipientId: selectedFriend.partnerId,
-        senderId: selectedFriend.myId,
+        recipientId: selectedFriend?.id,
+        senderId: profileData?.id,
       });
     };
 
@@ -48,7 +66,7 @@ const ChatBox = ({ selectedFriend }) => {
     return () => {
       socket?.off("oldMessages", handlePreviousChats);
     };
-  }, [selectedFriend, socket]);
+  }, [selectedFriend, profileData, socket]);
 
   useEffect(() => {
     socket?.on("receiveMessage", handleNewMessage);
@@ -56,25 +74,23 @@ const ChatBox = ({ selectedFriend }) => {
     return () => {
       socket?.off("receiveMessage", handleNewMessage);
     };
-  }, [socket]);
+  }, [socket, selectedFriend, profileData]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-
     if (input.trim()) {
       const newMessage = {
-        senderId: selectedFriend.myId,
-        recipientId: selectedFriend.partnerId,
+        senderId: profileData?.id,
+        recipientId: selectedFriend?.id,
         message: input,
         timestamp: new Date().toISOString(), // Add timestamp
       };
-      socket.emit("sendMessage", newMessage);
+      socket?.emit("sendMessage", newMessage);
       setInput("");
     }
   };
 
   useEffect(() => {
-    console.log(messages, "messagesmessages");
     if (endOfMessagesRef.current) {
       endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
@@ -87,7 +103,14 @@ const ChatBox = ({ selectedFriend }) => {
   return (
     <div className="chat-section">
       <div className="chat-header">
-        <h2>{selectedFriend?.name}</h2>
+        <div className="friend-status">
+          <p className="friend-name">{selectedFriend?.email}</p>
+          <span
+            className={`status-dot ${
+              connectedUser.includes(selectedFriend?.id) ? "online" : "offline"
+            }`}
+          ></span>
+        </div>
       </div>
       <div className="messages">
         {messages.map((message, index) => (

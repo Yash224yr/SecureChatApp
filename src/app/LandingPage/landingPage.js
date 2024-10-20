@@ -8,6 +8,7 @@ import { IoMdLogOut } from "react-icons/io";
 import { useCookies } from 'react-cookie';
 import { SECURE_CHAT_COOKIE } from '@/constant/ENV';
 import { ROUTESPATH } from '@/constant/ROUTES';
+import GlobalSearchFriends from '@/components/globalSearchFriends';
 
 const LandingPage = () => {
   const router = useRouter()
@@ -24,6 +25,7 @@ const LandingPage = () => {
         <h1 className="logo">ChatApp</h1>
         <nav className="nav">
           <ul>
+          <GlobalSearchFriends />
             <li><Link href="#features">Features</Link></li>
             <li><Link href="#about">About</Link></li>
             <li><Link href="#contact">Contact</Link></li>
