@@ -37,7 +37,6 @@ export const SocketProvider = ({ children }) => {
   }, []);
 
   return (
-<<<<<<< HEAD
     <SocketContext.Provider
       value={{
         socket: socket.current,
@@ -46,9 +45,6 @@ export const SocketProvider = ({ children }) => {
         setProfileData,
       }}
     >
-=======
-    <SocketContext.Provider value={{ socket: socket.current, isConnected  , profileData , setProfileData}}>
->>>>>>> 6cbbdffb4c1e0c6a46197d970f480d60483ebd8b
       {children}
     </SocketContext.Provider>
   );
