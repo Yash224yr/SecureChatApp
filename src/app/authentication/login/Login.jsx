@@ -15,6 +15,7 @@ import { LOGIN_API } from "@/api";
 import { useCookies } from "react-cookie";
 import { SECURE_CHAT_COOKIE } from "@/constant/ENV";
 import AuthenticationContainer from "../components/authenticationContainer/AuthenticationContainer";
+import CustomTag from "../components/customTag";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -90,6 +91,7 @@ const Login = () => {
                   type="password"
                 />
                 <CustomButton isSubmitting={isSubmitting} text="Log In" />
+                <CustomTag title={"Sign Up"}  onClick={routeToRegister} />
               </Form>
             )}
           </Formik>

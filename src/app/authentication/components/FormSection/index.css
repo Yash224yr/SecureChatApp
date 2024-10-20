@@ -36,4 +36,9 @@
   }
   
  
+  @media screen and (max-width: 768px) {
+    .form-section {
+    width: 100%;
+    }
+  }
   

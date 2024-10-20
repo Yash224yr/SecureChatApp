@@ -8,7 +8,7 @@ import { AUTH_ROUTES, ROUTESPATH } from "@/constant/ROUTES";
 import { usePathname } from "next/navigation";
 import ShowOnlineStatus from "@/components/showOnlineStatus";
 import { SocketContext } from "./SocketContext";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 const ProtectedPage = ({ children }) => {
   const [cookies] = useCookies([SECURE_CHAT_COOKIE]);
@@ -16,28 +16,26 @@ const ProtectedPage = ({ children }) => {
   const location = usePathname();
   const [isReady, setIsReady] = useState(false);
   const [loader, setLoader] = useState(true);
-  const { setProfileData , profileData } = useContext(SocketContext)
-  const { isConnected } = useContext(SocketContext)
+  const { setProfileData, profileData } = useContext(SocketContext);
+  const { isConnected } = useContext(SocketContext);
 
   useEffect(() => {
     const checkForSession = async () => {
       const cookieToken = cookies[SECURE_CHAT_COOKIE];
-      console.log(cookieToken, location.startsWith("/authentication"))
-      if(cookieToken && profileData === null){
-        setProfileData(jwt.decode(cookieToken))
+      console.log(cookieToken, location.startsWith("/authentication"));
+      if (cookieToken && profileData === null) {
+        setProfileData(jwt.decode(cookieToken));
       }
       if (cookieToken && location.startsWith("/authentication")) {
         return router.push(ROUTESPATH.home);
-      }
-      else if (!cookieToken && AUTH_ROUTES.includes(location)) {
+      } else if (!cookieToken && AUTH_ROUTES.includes(location)) {
         return router.push(ROUTESPATH.login);
       }
-      setTimeout(() => {
-        setIsReady(true);
-        setLoader(false);
-      }, 300);
-    }
-    checkForSession()
+
+      setIsReady(true);
+      setLoader(false);
+    };
+    checkForSession();
   }, [cookies, location, router]);
 
   if (loader || !isReady) {
@@ -47,9 +45,9 @@ const ProtectedPage = ({ children }) => {
   return (
     <>
       <ShowOnlineStatus isConnected={isConnected} />
-      {isReady && children || null}
+      {(isReady && children) || null}
     </>
-  )
+  );
 };
 
 export default ProtectedPage;

@@ -3,6 +3,8 @@ import "./globals.css";
 import ProtectedPage from "./protectedPage";
 import NextTopLoader from "nextjs-toploader";
 import { SocketProvider } from "./SocketContext";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,8 +43,15 @@ export default function RootLayout({ children }) {
           zIndex={1600}
           showAtBottom={false}
         />
-        <SocketProvider> {/* Correct usage */}
-          <ProtectedPage>{children}</ProtectedPage>
+
+        <SocketProvider>
+          {" "}
+          {/* Correct usage */}
+          <ProtectedPage>
+            <Header />
+            {children}
+            <Footer />
+          </ProtectedPage>
         </SocketProvider>
       </body>
     </html>

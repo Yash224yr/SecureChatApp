@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect, useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import "./index.css";
@@ -11,7 +12,7 @@ const GlobalSearchFriends = () => {
   const { profileData } = useContext(SocketContext);
 
   const handleSearch = async () => {
-    socket.emit("userList", {
+    socket?.emit("userList", {
       email: searchTerm,
       limit: 5,
     });
@@ -20,7 +21,7 @@ const GlobalSearchFriends = () => {
 
   useEffect(() => {
     // Listening for the user list response
-    socket.on("userListResponse", (users) => {
+    socket?.on("userListResponse", (users) => {
       console.log(users, "userssssss");
       if (Array.isArray(users)) {
         setUserList(users);
@@ -32,15 +33,15 @@ const GlobalSearchFriends = () => {
     });
 
     // Listening for errors
-    socket.on("userListError", (err) => {
+    socket?.on("userListError", (err) => {
       // setError(err.message);
       setUserList([]);
     });
 
     // Clean up the listener when the component unmounts
     return () => {
-      socket.off("userListResponse");
-      socket.off("userListError");
+      socket?.off("userListResponse");
+      socket?.off("userListError");
     };
   }, []);
 

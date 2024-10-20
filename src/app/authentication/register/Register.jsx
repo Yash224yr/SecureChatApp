@@ -14,6 +14,7 @@ import { ROUTESPATH } from "@/constant/ROUTES";
 import { SweetAlertToast } from "@/utils/sweetAlert";
 import FormSection from "../components/FormSection/FormSection";
 import AuthenticationContainer from "../components/authenticationContainer/AuthenticationContainer";
+import CustomTag from "../components/customTag";
 
 const validationSchema = Yup.object({
   username: Yup.string()
@@ -85,6 +86,9 @@ const Register = () => {
                 />
                 <FormCheckBox name="terms" label="Accept Terms and Conditions" />
                 <CustomButton loader={isSubmitting} text="Sign Up" />
+                <CustomTag  title={"Sign In"}  onClick={routeToLogin} />
+
+                <p></p>
               </Form>
             )}
           </Formik>

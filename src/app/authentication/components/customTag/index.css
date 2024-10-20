@@ -1,0 +1,23 @@
+/* Base styling for link */
+.custom-link {
+  display: inline-block;
+  color: #0056b3;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.custom-link:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 768px) {
+    .custom-link {
+      display: none;
+    }
+  }
+  

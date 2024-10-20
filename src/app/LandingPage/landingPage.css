@@ -6,42 +6,8 @@
     min-height: 100vh;
   }
   
-  .header {
-    background-color: #ffffff;
-    color: #333;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-  
-  .header .logo {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .nav a {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .nav a:hover {
-    color: #007bff;
-  }
-  
+ 
+
   .main-content {
     flex: 1;
     padding: 20px;
@@ -99,26 +65,7 @@
     background-color: #0056b3;
     transform: scale(1.05);
   }
-  .logout-button {
-    display: inline-flex; /* Allows for icon and text alignment */
-    align-items: center; /* Centers items vertically */
-    padding: 10px 15px;
-    background-color: #007bff; /* Transparent background */
-    color: white !important; /* Blue text color */
-    border: 2px solid #007bff; /* Blue border */
-    border-radius: 30px; /* Rounded edges for a pill shape */
-    text-decoration: none; /* Remove underline */
-    font-size: 16px; /* Adjusted font size */
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-}
 
-.logout-button:hover {
-  background-color: #0056b3; /* Darker blue background on hover */
-  color: #e0e0e0; /* Light grey text color on hover */
-  border-color: #0056b3; /* Match border color with hover background */
-  transform: scale(1.05); /* Slightly enlarge the button on hover */
-}
-  
   
   .features {
     padding: 40px 20px;
@@ -169,13 +116,7 @@
     margin: 20px 0;
   }
   
-  .footer {
-    background-color: #ffffff;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  }
+
   
   .social-media {
     margin-top: 10px;
