@@ -9,10 +9,17 @@ export const useSocket = () => useContext(SocketContext);
 export const SocketProvider = ({ children }) => {
   const socket = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
+<<<<<<< HEAD
   const [profileData, setProfileData] = useState(null);
   useEffect(() => {
     // Initialize socket connection
     socket.current = io(process.env.NEXT_PUBLIC_API_BASE_URL, {
+=======
+  const [profileData , setProfileData] = useState(null)
+  useEffect(() => {
+    // Initialize socket connection
+    socket.current = io("http://localhost:3000", {
+>>>>>>> 6cbbdffb4c1e0c6a46197d970f480d60483ebd8b
       transports: ["websocket", "polling"], // Use WebSocket with fallback to polling
     });
 
@@ -37,6 +44,7 @@ export const SocketProvider = ({ children }) => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <SocketContext.Provider
       value={{
         socket: socket.current,
@@ -45,6 +53,9 @@ export const SocketProvider = ({ children }) => {
         setProfileData,
       }}
     >
+=======
+    <SocketContext.Provider value={{ socket: socket.current, isConnected  , profileData , setProfileData}}>
+>>>>>>> 6cbbdffb4c1e0c6a46197d970f480d60483ebd8b
       {children}
     </SocketContext.Provider>
   );

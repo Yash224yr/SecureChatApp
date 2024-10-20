@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { FaPaperclip, FaLock, FaLockOpen, FaUser } from "react-icons/fa";
 import { io } from "socket.io-client";
 
+<<<<<<< HEAD
 const ChatBox = ({
   selectedFriend,
   profileData,
@@ -10,6 +11,9 @@ const ChatBox = ({
   setNewMessageNotification,
   newMessageNotification,
 }) => {
+=======
+const ChatBox = ({ selectedFriend, profileData, connectedUser, setNewMessageNotification, newMessageNotification }) => {
+>>>>>>> 6cbbdffb4c1e0c6a46197d970f480d60483ebd8b
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isPrivateChat, setIsPrivateChat] = useState(false);
@@ -28,6 +32,7 @@ const ChatBox = ({
   }, [socket]);
 
   useEffect(() => {
+<<<<<<< HEAD
     const removeNewMessageNotification = newMessageNotification.filter(
       (item) => {
         return item !== selectedFriend.id;
@@ -42,6 +47,19 @@ const ChatBox = ({
     const { id } = selectedFriend;
     selectedFriend.id !== data?.senderId &&
       setNewMessageNotification([...newMessageNotification, data?.senderId]);
+=======
+    const removeNewMessageNotification = newMessageNotification.filter((item) => {
+      return item !== selectedFriend.id
+    })
+    setNewMessageNotification(removeNewMessageNotification)
+  }, [selectedFriend])
+
+  const handleNewMessage = (data) => {
+    console.log(data, "idid")
+    const { senderId, recipientId } = data;
+    const { id } = selectedFriend;
+    selectedFriend.id !== data?.senderId && setNewMessageNotification([...newMessageNotification, data?.senderId])
+>>>>>>> 6cbbdffb4c1e0c6a46197d970f480d60483ebd8b
     if (senderId === id) {
       setMessages((prevMessages) => [...prevMessages, data]);
     }
@@ -103,6 +121,7 @@ const ChatBox = ({
   return (
     <div className="chat-section">
       <div className="chat-header">
+<<<<<<< HEAD
         <div className="friend-status">
           <p className="friend-name">{selectedFriend?.email}</p>
           <span
@@ -111,14 +130,22 @@ const ChatBox = ({
             }`}
           ></span>
         </div>
+=======
+
+        <div className="friend-status">
+          <p className="friend-name">{selectedFriend?.email}</p>
+          <span className={`status-dot ${connectedUser.includes(selectedFriend?.id) ? "online" : "offline"}`}></span>
+        </div>
+
+
+>>>>>>> 6cbbdffb4c1e0c6a46197d970f480d60483ebd8b
       </div>
       <div className="messages">
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`message ${
-              message.status === "Sent" ? "sent" : "received"
-            } ${isPrivateChat && index < messages.length - 1 ? "blurred" : ""}`}
+            className={`message ${message.status === "Sent" ? "sent" : "received"
+              } ${isPrivateChat && index < messages.length - 1 ? "blurred" : ""}`}
           >
             <div className="message-text">{message.message}</div>
             <div className="message-time">
